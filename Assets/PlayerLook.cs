@@ -19,22 +19,29 @@ public class PlayerLook : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if (Input.touchCount > 0)
+            HandleLookInput();
+        }
+    }
+
+    private void HandleLookInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.position.x > Screen.width / 2)
             {
-                Touch touch = Input.GetTouch(0);
-                if (touch.position.x > Screen.width / 2)
-                {
-                    LookAround(touch.deltaPosition.x, touch.deltaPosition.y);
-                }
+                float mouseX = touch.deltaPosition.x * mouseSensitivity * Time.deltaTime;
+                float mouseY = touch.deltaPosition.y * mouseSensitivity * Time.deltaTime;
+                LookAround(mouseX, mouseY);
             }
-            else if (Input.GetMouseButton(0))
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            if (Input.mousePosition.x > Screen.width / 2)
             {
-                if (Input.mousePosition.x > Screen.width / 2)
-                {
-                    float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-                    float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-                    LookAround(mouseX, mouseY);
-                }
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+                LookAround(mouseX, mouseY);
             }
         }
     }
@@ -43,8 +50,8 @@ public class PlayerLook : MonoBehaviourPun
     {
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
         playerBody.localRotation = Quaternion.Euler(xRotation, playerBody.localEulerAngles.y, 0f);
+
         playerBody.Rotate(Vector3.up * mouseX);
     }
 }
