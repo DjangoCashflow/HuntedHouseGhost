@@ -4,40 +4,66 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviourPun
 {
     public float speed = 5.0f;
-    private Joystick joystick;
+    public Joystick joystick;
+    public float lookSpeed = 2.0f;
 
     private CharacterController controller;
+    private Camera playerCamera;
 
     void Start()
     {
         if (photonView.IsMine)
         {
             controller = GetComponent<CharacterController>();
-            Camera.main.transform.SetParent(transform);
-            Camera.main.transform.localPosition = new Vector3(0, 1.7f, 0); // Adjust the camera position
+            playerCamera = GetComponentInChildren<Camera>();
+            playerCamera.transform.SetParent(transform);
 
             // Find the Joystick in the scene
             joystick = FindObjectOfType<Joystick>();
         }
         else
         {
-            // Destroy the local camera if this is not the local player
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
     }
 
     void Update()
     {
-        if (photonView.IsMine && joystick != null)
+        if (photonView.IsMine)
         {
-            float horizontal = joystick.Horizontal;
-            float vertical = joystick.Vertical;
+            HandleMovement();
+            HandleLook();
+        }
+    }
 
-            Vector3 direction = new Vector3(horizontal, 0, vertical);
-            direction = Camera.main.transform.TransformDirection(direction);
-            direction.y = 0;
+    private void HandleMovement()
+    {
+        float horizontal = joystick.Horizontal;
+        float vertical = joystick.Vertical;
 
-            controller.Move(direction * speed * Time.deltaTime);
+        Vector3 direction = new Vector3(horizontal, 0, vertical);
+        direction = Camera.main.transform.TransformDirection(direction);
+        direction.y = 0;
+
+        controller.Move(direction * speed * Time.deltaTime);
+    }
+
+    private void HandleLook()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.position.x > Screen.width / 2)
+            {
+                float touchHorizontal = touch.deltaPosition.x * lookSpeed * Time.deltaTime;
+                float touchVertical = -touch.deltaPosition.y * lookSpeed * Time.deltaTime;
+
+                // Rotate the player horizontally
+                transform.Rotate(0, touchHorizontal, 0);
+
+                // Pivot the camera vertically
+                playerCamera.transform.Rotate(touchVertical, 0, 0);
+            }
         }
     }
 }
