@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviourPun
 {
     public float speed = 5.0f;
-    public Joystick joystick;
+    private Joystick joystick;
 
     private CharacterController controller;
 
@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviourPun
             controller = GetComponent<CharacterController>();
             Camera.main.transform.SetParent(transform);
             Camera.main.transform.localPosition = new Vector3(0, 1.7f, 0); // Adjust the camera position
+
+            // Find the Joystick in the scene
+            joystick = FindObjectOfType<Joystick>();
         }
         else
         {
@@ -25,7 +28,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && joystick != null)
         {
             float horizontal = joystick.Horizontal;
             float vertical = joystick.Vertical;
