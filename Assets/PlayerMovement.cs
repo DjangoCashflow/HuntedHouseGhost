@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviourPun
     private CharacterController controller;
     private Camera playerCamera;
 
+    private float cameraPitch = 0.0f;
+
     void Start()
     {
         if (photonView.IsMine)
@@ -42,8 +44,7 @@ public class PlayerMovement : MonoBehaviourPun
         float vertical = joystick.Vertical;
 
         Vector3 direction = new Vector3(horizontal, 0, vertical);
-        direction = Camera.main.transform.TransformDirection(direction);
-        direction.y = 0;
+        direction = transform.TransformDirection(direction); // Use local transform to move forward
 
         controller.Move(direction * speed * Time.deltaTime);
     }
@@ -62,7 +63,8 @@ public class PlayerMovement : MonoBehaviourPun
                 transform.Rotate(0, touchHorizontal, 0);
 
                 // Pivot the camera vertically
-                playerCamera.transform.Rotate(touchVertical, 0, 0);
+                cameraPitch = Mathf.Clamp(cameraPitch + touchVertical, -90, 90);
+                playerCamera.transform.localEulerAngles = new Vector3(cameraPitch, 0, 0);
             }
         }
     }
