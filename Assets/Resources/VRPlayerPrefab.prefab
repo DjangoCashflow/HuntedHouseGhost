@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 9165526451825716404}
   - component: {fileID: -4088777614416189026}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: VRPlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
