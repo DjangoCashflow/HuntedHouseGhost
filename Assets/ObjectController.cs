@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class ObjectController : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    public GameObject cube;
+    public GameObject[] cubes = new GameObject[15];
+
+    void Start()
+    {
+        for (int i = 0; i < cubes.Length; i++)
+        {
+            cubes[i].SetActive(false); // Ensure the cubes are disabled by default
+        }
+    }
 
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == 1) // Enable cube
+        if (eventCode >= 1 && eventCode <= 15) // Enable cubes
         {
-            cube.SetActive(true);
+            cubes[eventCode - 1].SetActive(true);
         }
-        else if (eventCode == 0) // Disable cube
+        else if (eventCode >= 100 && eventCode <= 114) // Disable cubes
         {
-            cube.SetActive(false);
+            cubes[eventCode - 100].SetActive(false);
         }
     }
 
