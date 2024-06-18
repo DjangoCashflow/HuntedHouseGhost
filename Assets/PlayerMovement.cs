@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     private CharacterController controller;
     private Camera playerCamera;
+    private Animator animator;
 
     private float cameraPitch = 0.0f;
 
@@ -18,7 +19,7 @@ public class PlayerMovement : MonoBehaviourPun
         {
             controller = GetComponent<CharacterController>();
             playerCamera = GetComponentInChildren<Camera>();
-            playerCamera.transform.SetParent(transform);
+            animator = GetComponent<Animator>();
 
             // Find the Joystick in the scene
             joystick = FindObjectOfType<Joystick>();
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviourPun
         {
             HandleMovement();
             HandleLook();
+            UpdateAnimator();
         }
     }
 
@@ -67,5 +69,16 @@ public class PlayerMovement : MonoBehaviourPun
                 playerCamera.transform.localEulerAngles = new Vector3(cameraPitch, 0, 0);
             }
         }
+    }
+
+    private void UpdateAnimator()
+    {
+        float horizontal = joystick.Horizontal;
+        float vertical = joystick.Vertical;
+
+        Debug.Log($"Updating Animator: MoveX = {horizontal}, MoveY = {vertical}");
+
+        animator.SetFloat("MoveX", horizontal);
+        animator.SetFloat("MoveY", vertical);
     }
 }
