@@ -93,8 +93,8 @@ public class PlayerMovement : MonoBehaviourPun
         float vertical = joystick.Vertical;
 
         // Apply a small deadzone to prevent tiny movements
-        if (Mathf.Abs(horizontal) < 0.1f) horizontal = 0;
-        if (Mathf.Abs(vertical) < 0.1f) vertical = 0;
+        if (Mathf.Abs(horizontal) < 0.05f) horizontal = 0;
+        if (Mathf.Abs(vertical) < 0.05f) vertical = 0;
 
         animator.SetFloat("MoveX", horizontal);
         animator.SetFloat("MoveY", vertical);
@@ -103,9 +103,5 @@ public class PlayerMovement : MonoBehaviourPun
         Debug.Log($"Setting Animator Parameters - MoveX: {horizontal}, MoveY: {vertical}");
         Debug.Log($"Actual Animator Parameters - MoveX: {animator.GetFloat("MoveX")}, MoveY: {animator.GetFloat("MoveY")}");
 
-        // Optional: Set an "IsMoving" bool for transitions
-        bool isMoving = horizontal != 0 || vertical != 0;
-        animator.SetBool("IsMoving", isMoving);
-        Debug.Log($"IsMoving: {isMoving}");
     }
 }
