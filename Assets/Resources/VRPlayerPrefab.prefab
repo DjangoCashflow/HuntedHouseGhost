@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 6051230281124601863}
   - component: {fileID: 9165526451825716404}
   - component: {fileID: -4088777614416189026}
-  - component: {fileID: 7643435708194324779}
   m_Layer: 0
   m_Name: VRPlayerPrefab
   m_TagString: VRPlayer
@@ -233,21 +232,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &7643435708194324779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6893428143201790888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 880bb608cd0041e489e1a69a6cc18672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  humanAnimator: {fileID: 1180446351777622487}
-  humanTransform: {fileID: 1708032206900975703}
-  movementSpeedThreshold: 0.1
 --- !u!1001 &7179070326130948111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -307,15 +291,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3344797552917926168, guid: da1203547328fdb41974e0b5334e799a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7276878789038417472}
   m_SourcePrefab: {fileID: 100100000, guid: da1203547328fdb41974e0b5334e799a, type: 3}
---- !u!95 &1180446351777622487 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8340921455869514200, guid: da1203547328fdb41974e0b5334e799a, type: 3}
-  m_PrefabInstance: {fileID: 7179070326130948111}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5080594086929478573 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2675361429882964898, guid: da1203547328fdb41974e0b5334e799a, type: 3}
   m_PrefabInstance: {fileID: 7179070326130948111}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5605351836469029143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3344797552917926168, guid: da1203547328fdb41974e0b5334e799a, type: 3}
+  m_PrefabInstance: {fileID: 7179070326130948111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7276878789038417472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605351836469029143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5554f00562bd4845959284169876469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedThreshold: 0.1
