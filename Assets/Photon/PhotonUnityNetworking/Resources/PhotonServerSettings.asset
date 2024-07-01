@@ -42,6 +42,10 @@ MonoBehaviour:
   - EnableItem
   - SetCubeState
   - RPC_EnableDisableCube
+  - DisableMovement
+  - TriggerGameOver
+  - ChangeSceneToGameOver
+  - ChangeSceneToGameOverRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

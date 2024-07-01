@@ -76,11 +76,17 @@ public class AndroidConnectionManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom("Room1", new Photon.Realtime.RoomOptions(), Photon.Realtime.TypedLobby.Default);
     }
 
-    public override void OnJoinedRoom()
+public override void OnJoinedRoom()
+{
+    connectionStatusText.text = "Joined Room";
+    SpawnPlayer();
+    // Add a line to load the scene for all players
+    if (PhotonNetwork.IsMasterClient)
     {
-        connectionStatusText.text = "Joined Room";
-        SpawnPlayer();
+        PhotonNetwork.LoadLevel("GameScene"); // Assuming your main game scene is named "GameScene"
     }
+}
+
 
     public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
     {

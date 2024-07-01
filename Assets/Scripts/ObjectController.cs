@@ -20,12 +20,26 @@ public class ObjectController : MonoBehaviourPunCallbacks, IOnEventCallback
         byte eventCode = photonEvent.Code;
         if (eventCode >= 1 && eventCode <= 15) // Enable cubes
         {
-            cubes[eventCode - 1].SetActive(true);
+            int index = eventCode - 1;
+            cubes[index].SetActive(true);
+            Debug.Log($"ObjectController: Cube {index} enabled");
         }
         else if (eventCode >= 100 && eventCode <= 114) // Disable cubes
         {
-            cubes[eventCode - 100].SetActive(false);
+            int index = eventCode - 100;
+            cubes[index].SetActive(false);
+            Debug.Log($"ObjectController: Cube {index} disabled");
         }
+    }
+
+    public override void OnJoinedRoom()
+    {
+        // Initialize cube states when joining a room
+        for (int i = 0; i < cubes.Length; i++)
+        {
+            cubes[i].SetActive(false);
+        }
+        Debug.Log("ObjectController: Joined room, initialized cube states");
     }
 
     void OnEnable()

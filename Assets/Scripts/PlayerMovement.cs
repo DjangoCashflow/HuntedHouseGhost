@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviourPun
     private Camera playerCamera;
     private Animator animator;
     private float cameraPitch = 0.0f;
+    private bool canMove = true;  // New flag to control movement
 
     void Start()
     {
@@ -34,9 +35,12 @@ public class PlayerMovement : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            HandleMovement();
-            HandleLook();
-            UpdateAnimator();
+            if (canMove)
+            {
+                HandleMovement();
+                HandleLook();
+                UpdateAnimator();
+            }
         }
     }
 
@@ -102,6 +106,19 @@ public class PlayerMovement : MonoBehaviourPun
         // Debug log for animator parameters
         Debug.Log($"Setting Animator Parameters - MoveX: {horizontal}, MoveY: {vertical}");
         Debug.Log($"Actual Animator Parameters - MoveX: {animator.GetFloat("MoveX")}, MoveY: {animator.GetFloat("MoveY")}");
+    }
 
+    // New method to disable movement
+    [PunRPC]
+    public void DisableMovement(float duration)
+    {
+        StartCoroutine(DisableMovementCoroutine(duration));
+    }
+
+    private System.Collections.IEnumerator DisableMovementCoroutine(float duration)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(duration);
+        canMove = true;
     }
 }
